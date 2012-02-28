@@ -33,6 +33,6 @@ func main() {
 	}
 
 	for _, msg := range msgs {
-		fmt.Printf("%#v\n", msg)
+		fmt.Printf("%s\n", msg.Body)
 	}
 }
