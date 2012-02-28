@@ -24,26 +24,36 @@ func ReadMbox(r io.Reader) (msgs []mail.RawMessage, err error) {
 			// flush the previous message, if necessary
 			if mbuf != nil {
 				m, err = mail.ParseRaw(mbuf.Bytes())
-				if err != nil { return }
+				if err != nil {
+					return
+				}
 				msgs = append(msgs, m)
 			} else {
 				mbuf = new(bytes.Buffer)
 			}
 		} else {
 			_, err = mbuf.Write(l)
-			if err != nil { return }
+			if err != nil {
+				return
+			}
 			_, err = mbuf.Write(crlf)
-			if err != nil { return }
+			if err != nil {
+				return
+			}
 		}
 		l, _, err = br.ReadLine()
 	}
-	if err == io.EOF { err = nil }
+	if err == io.EOF {
+		err = nil
+	}
 	return
 }
 
 func ReadMboxFile(filename string) ([]mail.RawMessage, error) {
 	f, err := os.Open(filename)
-	if err != nil { return nil, err }
+	if err != nil {
+		return nil, err
+	}
 	msgs, err := ReadMbox(f)
 	f.Close()
 	return msgs, err
