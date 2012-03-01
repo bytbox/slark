@@ -22,7 +22,7 @@ func mktmpl(tdn, tn string) *template.Template {
 	return tmpl
 }
 
-func writeHtml(odn, tdn string, msgs []mail.RawMessage) {
+func writeHtml(odn, tdn string, msgs []mail.Message) {
 	os.MkdirAll(odn, os.ModeDir|0755)
 
 	indexTmpl := mktmpl(tdn, "index")
