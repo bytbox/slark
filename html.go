@@ -31,8 +31,11 @@ func writeHtml(odn, tdn string, msgs []mail.Message) {
 	if err != nil {
 		panic(err)
 	}
-	indexTmpl.Execute(f, msgs)
+	err = indexTmpl.Execute(f, msgs)
 	f.Close()
+	if err != nil {
+		panic(err)
+	}
 
 
 	msgTmpl := mktmpl(tdn, "message")

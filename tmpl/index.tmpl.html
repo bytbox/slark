@@ -7,6 +7,12 @@
 {{range .}}
 <div class="minfo">
 <a href="{{.Id}}.html">{{.Subject}}</a>
+
+{{.Sender.Name}} &rarr;
+
+{{range .To}}
+{{.Name}},
+{{end}}
 </div>
 {{end}}
 </body>
