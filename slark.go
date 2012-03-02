@@ -21,6 +21,7 @@ func main() {
 
 	if *version {
 		fmt.Printf("slark %s\n", VERSION)
+		return
 	}
 
 	args := flag.Args()
