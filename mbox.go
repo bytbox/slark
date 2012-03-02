@@ -16,11 +16,12 @@ var crlf = []byte{'\r', '\n'}
 func ReadMbox(r io.Reader) (msgs []mail.Message, err error) {
 	var mbuf *bytes.Buffer
 	var m mail.Message
+	lastblank := true
 	br := bufio.NewReaderSize(r, _MAX_LINE_LEN)
 	l, _, err := br.ReadLine()
 	for err == nil {
 		fs := bytes.SplitN(l, []byte{' '}, 3)
-		if len(fs) == 3 && string(fs[0]) == "From" {
+		if len(fs) == 3 && string(fs[0]) == "From" && lastblank {
 			// flush the previous message, if necessary
 			if mbuf != nil {
 				m, err = mail.Parse(mbuf.Bytes())
@@ -39,6 +40,11 @@ func ReadMbox(r io.Reader) (msgs []mail.Message, err error) {
 			if err != nil {
 				return
 			}
+		}
+		if len(l) > 0 {
+			lastblank = false
+		} else {
+			lastblank = true
 		}
 		l, _, err = br.ReadLine()
 	}
