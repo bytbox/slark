@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"io/ioutil"
 	"os"
@@ -33,11 +34,15 @@ func writeHtml(odn, tdn string, msgs []mail.Message) {
 	indexTmpl.Execute(f, msgs)
 	f.Close()
 
-/*
+
 	msgTmpl := mktmpl(tdn, "message")
 
 	for _, msg := range msgs {
-		msgTmpl.Execute(os.Stdout, msg)
+		f, err := os.Create(filepath.Join(odn, fmt.Sprintf("%s.html", msg.Id)))
+		if err != nil {
+			panic(err)
+		}
+		msgTmpl.Execute(f, msg)
+		f.Close()
 	}
-*/
 }

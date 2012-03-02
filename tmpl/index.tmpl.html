@@ -6,12 +6,8 @@
 <body>
 {{range .}}
 <div class="minfo">
-<h2>{{.Subject}}</h2>
-<pre>
-{{.Text}}
-</pre>
+<a href="{{.Id}}.html">{{.Subject}}</a>
 </div>
-<hr />
 {{end}}
 </body>
 </html>
