@@ -4,15 +4,45 @@
 <title>Message</title>
 </head>
 <body>
+
+{{define "msgIndex"}}
+<ul>
+{{range .}}
+
+<li><a href="{{.Id}}.html">{{.Subject}}</a>
+
+{{.Sender.Name}} &rarr;
+
+{{range .To}}
+{{.Name}},
+{{end}}
+{{template "msgIndex" .Children}}
+</li>
+{{end}}
+</ul>
+{{end}}
+
+
+
 <h1>{{.Subject}}</h1>
 <p><b>From</b> {{.Sender}}</p>
 <pre>
 {{.Text}}
 </pre>
-{{if .Parent}}
-{{with .Parent}}
-<p><b>Parent:</b> <a href="{{.Id}}.html">{{.Subject}}</a> from {{.From}}.</p>
+
+{{with .Root}}
+<ul>
+<li><a href="{{.Id}}.html">{{.Subject}}</a>
+
+{{.Sender.Name}} &rarr;
+
+{{range .To}}
+{{.Name}},
 {{end}}
+{{template "msgIndex" .Children}}
+</li>
+</ul>
 {{end}}
+
 </body>
 </html>

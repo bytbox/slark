@@ -29,6 +29,13 @@ func (tm *Threaded) modified() time.Time {
 	return d
 }
 
+func (tm *Threaded) Root() *Threaded {
+	if tm.Parent == nil {
+		return tm
+	}
+	return tm.Parent.Root()
+}
+
 type Sortable []*Threaded
 
 func (s Sortable) Len() int {
