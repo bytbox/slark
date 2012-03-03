@@ -1,6 +1,9 @@
 package main
 
 import (
+	"sort"
+	"time"
+
 	. "github.com/bytbox/go-mail"
 )
 
@@ -14,6 +17,24 @@ type Threaded struct {
 
 func (tm *Threaded) addChild(c *Threaded) {
 	tm.Children = append(tm.Children, c)
+}
+
+func (tm *Threaded) modified() time.Time {
+	return tm.Date
+}
+
+type Sortable []*Threaded
+
+func (s Sortable) Len() int {
+	return len(s)
+}
+
+func (s Sortable) Less(i, j int) bool {
+	return s[i].Date.Before(s[j].Date)
+}
+
+func (s Sortable) Swap(i, j int) {
+	s[i], s[j] = s[j], s[i]
 }
 
 func Thread(msgs []Message) []*Threaded {
@@ -50,5 +71,7 @@ func Thread(msgs []Message) []*Threaded {
 			threaded = append(threaded, tm)
 		}
 	}
+
+	sort.Sort(Sortable(threaded))
 	return threaded
 }
