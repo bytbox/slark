@@ -4,20 +4,25 @@
 <title>Sample Template</title>
 </head>
 <body>
+
+{{define "msgIndex"}}
+<ul>
 {{range .}}
-<div class="minfo">
-<a href="{{.Id}}.html">{{.Subject}}</a>
+
+<li><a href="{{.Id}}.html">{{.Subject}}</a>
 
 {{.Sender.Name}} &rarr;
 
 {{range .To}}
 {{.Name}},
 {{end}}
+{{template "msgIndex" .Children}}
+</li>
+{{end}}
+</ul>
+{{end}}
 
-{{if .Parent}}
-HASP: {{.Parent.Subject}}
-{{end}}
-</div>
-{{end}}
+{{template "msgIndex" .}}
+
 </body>
 </html>

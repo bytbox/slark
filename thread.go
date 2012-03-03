@@ -46,7 +46,9 @@ func Thread(msgs []Message) []*Threaded {
 
 	threaded := []*Threaded{}
 	for _, tm := range tmap {
-		threaded = append(threaded, tm)
+		if tm.Parent == nil {
+			threaded = append(threaded, tm)
+		}
 	}
 	return threaded
 }
