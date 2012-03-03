@@ -35,7 +35,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "error reading mbox: %s\n", err.Error())
 	}
 
-	threaded := Thread(msgs)
+	all, threaded := Thread(msgs)
 
-	writeHtml(*html, *tmpldir, threaded)
+	writeHtml(*html, *tmpldir, all, threaded)
 }

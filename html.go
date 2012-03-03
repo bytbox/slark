@@ -21,7 +21,7 @@ func mktmpl(tdn, tn string) *template.Template {
 	return tmpl
 }
 
-func writeHtml(odn, tdn string, msgs []*Threaded) {
+func writeHtml(odn, tdn string, all []*Threaded, msgs []*Threaded) {
 	os.MkdirAll(odn, os.ModeDir|0755)
 
 	indexTmpl := mktmpl(tdn, "index")
@@ -38,7 +38,7 @@ func writeHtml(odn, tdn string, msgs []*Threaded) {
 
 	msgTmpl := mktmpl(tdn, "message")
 
-	for _, msg := range msgs {
+	for _, msg := range all {
 		f, err := os.Create(filepath.Join(odn, fmt.Sprintf("%s.html", msg.Id)))
 		if err != nil {
 			panic(err)

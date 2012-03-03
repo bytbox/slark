@@ -9,5 +9,10 @@
 <pre>
 {{.Text}}
 </pre>
+{{if .Parent}}
+{{with .Parent}}
+<p><b>Parent:</b> <a href="{{.Id}}.html">{{.Subject}}</a> from {{.From}}.</p>
+{{end}}
+{{end}}
 </body>
 </html>

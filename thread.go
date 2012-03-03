@@ -43,7 +43,7 @@ func (s Sortable) Swap(i, j int) {
 	s[i], s[j] = s[j], s[i]
 }
 
-func Thread(msgs []Message) []*Threaded {
+func Thread(msgs []Message) ([]*Threaded, []*Threaded) {
 	tmap := map[string]*Threaded{}
 	for _, msg := range msgs {
 		mid := msg.MessageId
@@ -71,13 +71,16 @@ func Thread(msgs []Message) []*Threaded {
 		}
 	}
 
+	all := []*Threaded{}
+
 	threaded := []*Threaded{}
 	for _, tm := range tmap {
 		if tm.Parent == nil {
 			threaded = append(threaded, tm)
 		}
+		all = append(all, tm)
 	}
 
 	sort.Sort(Sortable(threaded))
-	return threaded
+	return all, threaded
 }
