@@ -20,7 +20,13 @@ func (tm *Threaded) addChild(c *Threaded) {
 }
 
 func (tm *Threaded) modified() time.Time {
-	return tm.Date
+	d := tm.Date
+	for _, c := range tm.Children {
+		if d.Before(c.Date) {
+			d = c.Date
+		}
+	}
+	return d
 }
 
 type Sortable []*Threaded
