@@ -6,8 +6,6 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-
-	"github.com/bytbox/go-mail"
 )
 
 func mktmpl(tdn, tn string) *template.Template {
@@ -23,7 +21,7 @@ func mktmpl(tdn, tn string) *template.Template {
 	return tmpl
 }
 
-func writeHtml(odn, tdn string, msgs []mail.Message) {
+func writeHtml(odn, tdn string, msgs []*Threaded) {
 	os.MkdirAll(odn, os.ModeDir|0755)
 
 	indexTmpl := mktmpl(tdn, "index")

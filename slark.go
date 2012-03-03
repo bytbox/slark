@@ -13,7 +13,6 @@ var (
 	version = flag.Bool("V", false, "display version information")
 	html    = flag.String("html", "html/", "write html output to directory")
 	tmpldir = flag.String("templates", "tmpl/", "use template directory")
-	watch   = flag.Bool("watch", false, "monitor file for updates")
 )
 
 func main() {
@@ -36,5 +35,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "error reading mbox: %s\n", err.Error())
 	}
 
-	writeHtml(*html, *tmpldir, msgs)
+	threaded := Thread(msgs)
+
+	writeHtml(*html, *tmpldir, threaded)
 }
