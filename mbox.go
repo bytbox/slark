@@ -26,9 +26,10 @@ func ReadMbox(r io.Reader) (msgs []mail.Message, err error) {
 			if mbuf != nil {
 				m, err = mail.Parse(mbuf.Bytes())
 				if err != nil {
-					return
+					println(err.Error())
+				} else {
+					msgs = append(msgs, m)
 				}
-				msgs = append(msgs, m)
 			}
 			mbuf = new(bytes.Buffer)
 		} else {
