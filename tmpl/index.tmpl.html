@@ -9,13 +9,8 @@
 <ul>
 {{range .}}
 
-<li><a href="{{.Id}}.html">{{.Subject}}</a>
+<li><a href="{{.Id}}.html">{{.Subject}}</a> <em>{{.Sender.Name}}</em>
 
-{{.Sender.Name}} &rarr;
-
-{{range .To}}
-{{.Name}},
-{{end}}
 {{template "msgIndex" .Children}}
 </li>
 {{end}}
