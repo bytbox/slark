@@ -33,6 +33,7 @@ func main() {
 	msgs, err := ReadMboxFile(fname)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "error reading mbox: %s\n", err.Error())
+		return
 	}
 
 	all, threaded := Thread(msgs)
