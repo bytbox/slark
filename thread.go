@@ -36,17 +36,17 @@ func (tm *Threaded) Root() *Threaded {
 	return tm.Parent.Root()
 }
 
-type Sortable []*Threaded
+type sortable []*Threaded
 
-func (s Sortable) Len() int {
+func (s sortable) Len() int {
 	return len(s)
 }
 
-func (s Sortable) Less(i, j int) bool {
+func (s sortable) Less(i, j int) bool {
 	return s[i].Date.Before(s[j].Date)
 }
 
-func (s Sortable) Swap(i, j int) {
+func (s sortable) Swap(i, j int) {
 	s[i], s[j] = s[j], s[i]
 }
 
@@ -86,8 +86,9 @@ func Thread(msgs []Message) ([]*Threaded, []*Threaded) {
 			threaded = append(threaded, tm)
 		}
 		all = append(all, tm)
+		sort.Sort(sortable(tm.Children))
 	}
 
-	sort.Sort(Sortable(threaded))
+	sort.Sort(sortable(threaded))
 	return all, threaded
 }
