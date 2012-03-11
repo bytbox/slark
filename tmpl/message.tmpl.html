@@ -11,7 +11,7 @@
 
 <li><a href="{{.Id}}.html">{{.Subject}}</a>
 
-{{.Sender.Name}} &rarr;
+{{with index .From 0}}{{.Name}}{{end}} &rarr;
 
 {{range .To}}
 {{.Name}},
@@ -25,7 +25,7 @@
 
 
 <h1>{{.Subject}}</h1>
-<p><b>From</b> {{.Sender}}</p>
+<p><b>From</b> {{index .From 0}}</p>
 <pre>
 {{.Text}}
 </pre>
@@ -34,7 +34,7 @@
 <ul>
 <li><a href="{{.Id}}.html">{{.Subject}}</a>
 
-{{.Sender.Name}} &rarr;
+{{with index .From 0}}{{.Name}}{{end}} &rarr;
 
 {{range .To}}
 {{.Name}},
