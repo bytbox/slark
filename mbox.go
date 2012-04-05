@@ -12,9 +12,9 @@ const _MAX_LINE_LEN = 1024
 
 var crlf = []byte{'\r', '\n'}
 
-func ReadMbox(r io.Reader) (msgs []mail.Message, err error) {
+func ReadMbox(r io.Reader) (msgs []*mail.Message, err error) {
 	var mbuf *bytes.Buffer
-	var m mail.Message
+	var m *mail.Message
 	lastblank := true
 	br := bufio.NewReaderSize(r, _MAX_LINE_LEN)
 	l, _, err := br.ReadLine()
@@ -23,7 +23,7 @@ func ReadMbox(r io.Reader) (msgs []mail.Message, err error) {
 		if len(fs) == 3 && string(fs[0]) == "From" && lastblank {
 			// flush the previous message, if necessary
 			if mbuf != nil {
-				m, err = mail.Parse(mbuf.Bytes())
+				m, err = mail.ReadMessage(mbuf)
 				if err != nil {
 					println(err.Error())
 				} else {
@@ -49,7 +49,7 @@ func ReadMbox(r io.Reader) (msgs []mail.Message, err error) {
 		l, _, err = br.ReadLine()
 	}
 	if err == io.EOF {
-		m, err = mail.Parse(mbuf.Bytes())
+		m, err = mail.ReadMessage(mbuf)
 		if err != nil {
 			return
 		}
@@ -58,7 +58,7 @@ func ReadMbox(r io.Reader) (msgs []mail.Message, err error) {
 	return
 }
 
-func ReadMboxFile(filename string) ([]mail.Message, error) {
+func ReadMboxFile(filename string) ([]*mail.Message, error) {
 	f, err := os.Open(filename)
 	if err != nil {
 		return nil, err

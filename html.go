@@ -39,11 +39,15 @@ func writeHtml(odn, tdn string, all []*Threaded, msgs []*Threaded) {
 	msgTmpl := mktmpl(tdn, "message")
 
 	for _, msg := range all {
-		f, err := os.Create(filepath.Join(odn, fmt.Sprintf("%s.html", msg.Id)))
+		f, err := os.Create(filepath.Join(odn, fmt.Sprintf("%s.html", msgid(msg))))
 		if err != nil {
 			panic(err)
 		}
 		msgTmpl.Execute(f, msg)
 		f.Close()
 	}
+}
+
+func msgid(msg *Threaded) string {
+	return "" // TODO
 }
