@@ -13,6 +13,7 @@ var (
 	version = flag.Bool("V", false, "display version information")
 	html    = flag.String("html", "html/", "write html output to directory")
 	tmpldir = flag.String("templates", "tmpl/", "use template directory")
+	statdir = flag.String("static", "static/", "use static directory")
 )
 
 func main() {
@@ -39,4 +40,5 @@ func main() {
 	all, threaded := Thread(msgs)
 
 	writeHtml(*html, *tmpldir, all, threaded)
+	copyStatic(*html, *statdir)
 }

@@ -47,3 +47,16 @@ func writeHtml(odn, tdn string, all []*Threaded, msgs []*Threaded) {
 		f.Close()
 	}
 }
+
+func copyStatic(odn, sdn string) {
+	fs, e := ioutil.ReadDir(sdn)
+	if e != nil { panic(e) }
+	for _, i := range fs {
+		if i.IsDir() { continue }
+		in := filepath.Join(sdn, i.Name())
+		out := filepath.Join(odn, i.Name())
+		c, e := ioutil.ReadFile(in)
+		if e != nil { continue }
+		ioutil.WriteFile(out, c, 0755)
+	}
+}
