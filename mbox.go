@@ -4,9 +4,8 @@ import (
 	"bufio"
 	"bytes"
 	"io"
+	"net/mail"
 	"os"
-
-	"github.com/bytbox/go-mail"
 )
 
 const _MAX_LINE_LEN = 1024

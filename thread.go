@@ -1,14 +1,13 @@
 package main
 
 import (
+	"net/mail"
 	"sort"
 	"time"
-
-	. "github.com/bytbox/go-mail"
 )
 
 type Threaded struct {
-	Message
+	mail.Message
 	Parent   *Threaded
 	Children []*Threaded
 
@@ -50,7 +49,7 @@ func (s sortable) Swap(i, j int) {
 	s[i], s[j] = s[j], s[i]
 }
 
-func Thread(msgs []Message) ([]*Threaded, []*Threaded) {
+func Thread(msgs []mail.Message) ([]*Threaded, []*Threaded) {
 	tmap := map[string]*Threaded{}
 	for _, msg := range msgs {
 		mid := msg.MessageId
